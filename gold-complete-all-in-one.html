@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gold Insight Atlas + ACCA Gold Suite (all-in-one)</title>
+  <meta name="description" content="Single-file site: live RSS atlas + ACCA gold dashboard. Requires internet for CDN scripts." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+/* ========== Gold Insight Atlas ========== */
+:root {
+  --bg: #0a0c0f;
+  --bg-elevated: #12161c;
+  --border: rgba(212, 175, 55, 0.12);
+  --gold: #d4af37;
+  --gold-dim: #9a7b2c;
+  --text: #e8eaed;
+  --text-muted: #8b929e;
+  --accent: #6ee7b7;
+  --danger: #f87171;
+  --font: "Instrument Sans", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --radius-sm: 8px;
+  --radius: 14px;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(212, 175, 55, 0.08), transparent 55%),
+    radial-gradient(ellipse 80% 50% at 100% 50%, rgba(110, 231, 183, 0.04), transparent 45%);
+  min-height: 100vh;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  padding: 0.75rem 1rem;
+  background: var(--gold);
+  color: #000;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10, 12, 15, 0.82);
+  backdrop-filter: blur(14px);
+}
+
+.header-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  box-shadow: 0 0 24px rgba(212, 175, 55, 0.35);
+}
+
+.brand-name {
+  display: block;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.brand-tag {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.nav a:hover {
+  color: var(--gold);
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: var(--mono);
+}
+
+.pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+}
+
+main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 2rem 0 3.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+  }
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--gold);
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+
+.hero h1 {
+  font-size: clamp(1.85rem, 4vw, 2.65rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  margin: 0 0 1rem;
+  font-weight: 650;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.lead {
+  margin: 0;
+  color: var(--text-muted);
+  max-width: 48ch;
+  font-size: 1.02rem;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.meta-pill {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.65rem 1rem;
+  min-width: 160px;
+}
+
+.meta-pill .mono {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+.meta-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+}
+
+.orbit {
+  position: relative;
+  width: min(100%, 320px);
+  aspect-ratio: 1;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.15), transparent 55%);
+}
+
+.orbit span {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.6;
+  animation: float 6s ease-in-out infinite;
+}
+
+.orbit span:nth-child(1) {
+  width: 12px;
+  height: 12px;
+  top: 18%;
+  left: 52%;
+  animation-delay: 0s;
+}
+
+.orbit span:nth-child(2) {
+  width: 8px;
+  height: 8px;
+  bottom: 28%;
+  left: 24%;
+  animation-delay: -2s;
+  background: var(--accent);
+}
+
+.orbit span:nth-child(3) {
+  width: 10px;
+  height: 10px;
+  bottom: 20%;
+  right: 22%;
+  animation-delay: -4s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(6px, -10px);
+  }
+}
+
+.section {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.section.alt {
+  background: rgba(18, 22, 28, 0.5);
+  margin: 0 -1.25rem;
+  padding: 3rem 1.25rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.section-head h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+}
+
+.section-desc {
+  margin: 0;
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+.feed-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+@media (min-width: 700px) {
+  .feed-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .feed-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.feed-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.15rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow);
+}
+
+.feed-card:hover {
+  border-color: rgba(212, 175, 55, 0.35);
+  transform: translateY(-2px);
+}
+
+.feed-card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.feed-source {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.feed-title {
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.feed-snippet {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.feed-date {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: auto;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tag {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--radius-sm);
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--gold);
+  font-family: var(--mono);
+}
+
+.feed-empty {
+  margin-top: 1rem;
+  color: var(--text-muted);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.card-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+@media (min-width: 640px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.inst-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inst-card h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.inst-type {
+  font-size: 0.72rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.inst-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.inst-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.inst-links a {
+  font-size: 0.82rem;
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.inst-links a:hover {
+  text-decoration: underline;
+}
+
+.about-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+@media (min-width: 720px) {
+  .about-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.about-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.15rem;
+}
+
+.about-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.about-card p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.inline-code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.12em 0.35em;
+  border-radius: 4px;
+}
+
+.site-footer {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.site-footer p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.shimmer-wrap {
+  min-height: 120px;
+  border-radius: var(--radius);
+  background: linear-gradient(
+    90deg,
+    var(--bg-elevated) 0%,
+    rgba(212, 175, 55, 0.08) 50%,
+    var(--bg-elevated) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.status-ok {
+  color: var(--accent);
+}
+
+.status-warn {
+  color: var(--danger);
+}
+
+/* ========== ACCA dashboard (scoped) ========== */
+#acca-root {
+  min-height: 60vh;
+}
+.playfair {
+  font-family: "Playfair Display", serif;
+}
+
+.dmsans {
+  font-family: "DM Sans", sans-serif;
+}
+
+.gold-text {
+  background: linear-gradient(135deg, #d4af37, #f5e27a, #b8860b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow {
+  box-shadow:
+    0 0 30px rgba(212, 175, 55, 0.2),
+    0 0 60px rgba(212, 175, 55, 0.05);
+}
+
+.tab-btn {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-family: "DM Sans", sans-serif;
+}
+
+.tab-btn:hover {
+  opacity: 0.85;
+}
+
+.insight-card {
+  transition: all 0.35s ease;
+  cursor: pointer;
+}
+
+.insight-card:hover {
+  transform: translateY(-3px);
+}
+
+.kpi-card {
+  transition: transform 0.2s ease;
+}
+
+.kpi-card:hover {
+  transform: scale(1.02);
+}
+
+.slider-gold {
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 4px;
+}
+
+.slider-gold::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4af37, #f5e27a);
+  cursor: pointer;
+}
+
+@keyframes tickerScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  display: flex;
+  gap: 0;
+  animation: tickerScroll 38s linear infinite;
+  white-space: nowrap;
+  will-change: transform;
+  width: max-content;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes pulseGold {
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+  }
+}
+
+.pulse-dot {
+  animation: pulseGold 2s infinite;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+.print-only {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #040608;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 4px;
+}
+
+  </style>
+</head>
+<body>
+  <!-- ======== Gold Insight Atlas markup ======== -->
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <strong class="brand-name">Gold Insight Atlas</strong>
+          <span class="brand-tag">Multi-institution &middot; Auto-refresh</span>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="#feed">Live feed</a>
+        <a href="#institutions">Institutions</a>
+        <a href="#acca-heading">ACCA suite</a>
+        <a href="#about">About</a>
+      </nav>
+      <div class="header-status">
+        <span class="pulse" aria-hidden="true"></span>
+        <span id="statusText">Initializing&hellip;</span>
+      </div>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">Professional gold intelligence</p>
+        <h1>One view of how <em>bodies, banks, and markets</em> frame gold.</h1>
+        <p class="lead">
+          RSS + institution hubs are configured in the <code class="inline-code">CONFIG</code> block inside this file&rsquo;s first script.
+          Scroll down for the full <strong>ACCA Gold &amp; Inflation Audit Suite</strong> (charts, FX, auditor tab).
+        </p>
+        <div class="hero-meta">
+          <div class="meta-pill">
+            <span class="mono" id="lastUpdated">&mdash;</span>
+            <span class="meta-label">Last aggregation</span>
+          </div>
+          <div class="meta-pill">
+            <span class="mono" id="nextRefresh">&mdash;</span>
+            <span class="meta-label">Next refresh</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="orbit"><span></span><span></span><span></span></div>
+      </div>
+    </section>
+    <section class="section" id="feed">
+      <div class="section-head">
+        <h2>Live insight stream</h2>
+        <p class="section-desc">Keyword-filtered headlines from global business RSS feeds. Refreshes automatically.</p>
+      </div>
+      <div id="feedGrid" class="feed-grid" role="list"></div>
+      <p id="feedEmpty" class="feed-empty hidden" role="status">No items matched gold-related keywords in this cycle. Showing curated demo cards below.</p>
+    </section>
+    <section class="section alt" id="institutions">
+      <div class="section-head">
+        <h2>Institution &amp; sell-side hubs</h2>
+        <p class="section-desc">Curated entry points. Links open in a new tab.</p>
+      </div>
+      <div id="institutionCards" class="card-grid"></div>
+    </section>
+    <section class="section" id="about">
+      <div class="section-head">
+        <h2>About this file</h2>
+        <p class="section-desc">Atlas logic runs in the first script; ACCA dashboard uses React + Recharts from CDN (needs network). For GitHub Pages, upload this single HTML file.</p>
+      </div>
+      <div class="about-grid">
+        <article class="about-card">
+          <h3>Configure RSS</h3>
+          <p>Edit <code class="inline-code">CONFIG</code> (keywords, feeds, institution cards) in the script below.</p>
+        </article>
+        <article class="about-card">
+          <h3>Refresh cadence</h3>
+          <p>Change <code class="inline-code">REFRESH_MS</code> in the same script (default 5 minutes).</p>
+        </article>
+        <article class="about-card">
+          <h3>Disclaimer</h3>
+          <p>Not investment advice. Verify research at original publishers.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p><strong>Gold Insight Atlas</strong> &middot; Single file &middot; &copy; <span id="year"></span></p>
+  </footer>
+
+  <hr style="border:0;border-top:1px solid rgba(212,175,55,0.2);margin:48px auto;max-width:1120px;" />
+
+  <h2 id="acca-heading" style="text-align:center;font-family:'Playfair Display',serif;color:#d4af37;margin:32px 16px 8px;">ACCA Gold Suite</h2>
+  <p style="text-align:center;font-family:'DM Sans',sans-serif;color:#64748b;font-size:14px;max-width:640px;margin:0 auto 16px;">Loaded below via React. If this area stays blank, check browser console (CDN blocked or script error).</p>
+  <div id="acca-root"></div>
+
+  <script>
+  /* ========== CONFIG (edit here) ========== */
+
+const GOLD_KEYWORDS = [
+  "gold", "xau", "bullion", "precious metal", "commodities",
+  "fed", "central bank", "inflation", "treasury", "dollar",
+  "fx", "geopolitic", "silver", "copper", "commodity",
+];
+
+/** RSS feeds via public JSON bridges (browser CORS). */
+const RSS_FEEDS = [
+  {
+    id: "bbc-business",
+    label: "BBC Business",
+    rssUrl: "https://feeds.bbci.co.uk/news/business/rss.xml",
+  },
+  {
+    id: "guardian-business",
+    label: "The Guardian \u00b7 Business",
+    rssUrl: "https://www.theguardian.com/uk/business/rss",
+  },
+  {
+    id: "cnn-money",
+    label: "CNN \u00b7 Business",
+    rssUrl: "https://rss.cnn.com/rss/money_latest.rss",
+  },
+  {
+    id: "reuters-business",
+    label: "Reuters \u00b7 Markets",
+    rssUrl: "https://feeds.reuters.com/reuters/businessNews",
+  },
+  {
+    id: "ft-markets",
+    label: "Financial Times",
+    rssUrl: "https://www.ft.com/rss/home/uk",
+  },
+];
+
+/** Curated institution hubs. */
+const INSTITUTION_CARDS = [
+  {
+    name: "ACCA",
+    type: "Professional body",
+    desc: "Accounting and finance thought leadership\u2014search insights for commodities, treasury, and risk.",
+    links: [
+      { label: "ACCA insights", href: "https://www.accaglobal.com/gb/en/professional-insights.html" },
+      { label: "Search: gold", href: "https://www.accaglobal.com/gb/en/search.html?query=gold" },
+    ],
+  },
+  {
+    name: "World Gold Council",
+    type: "Industry research",
+    desc: "Supply, demand, ETF flows, and regional gold market reports.",
+    links: [{ label: "Research", href: "https://www.gold.org/goldhub/research" }],
+  },
+  {
+    name: "J.P. Morgan Research",
+    type: "Global bank",
+    desc: "Cross-asset and commodities research hub (client access may apply).",
+    links: [{ label: "Research portal", href: "https://www.jpmorgan.com/insights/research" }],
+  },
+  {
+    name: "Goldman Sachs Insights",
+    type: "Global bank",
+    desc: "Macro and markets commentary; filter for commodities and rates.",
+    links: [{ label: "Insights", href: "https://www.goldmansachs.com/insights/" }],
+  },
+  {
+    name: "Deutsche Bank Research",
+    type: "Global bank",
+    desc: "Fixed income and FX research entry point.",
+    links: [{ label: "Research", href: "https://www.dbresearch.com/" }],
+  },
+  {
+    name: "HSBC Global Research",
+    type: "Global bank",
+    desc: "Markets publications overview (subscriptions vary).",
+    links: [{ label: "Research", href: "https://www.gbm.hsbc.com/en-gb/insights/research" }],
+  },
+  {
+    name: "CME Group \u2014 Gold",
+    type: "Exchange / futures",
+    desc: "Gold futures specifications, volumes, and education.",
+    links: [{ label: "Gold products", href: "https://www.cmegroup.com/markets/metals/precious/gold.html" }],
+  },
+  {
+    name: "London Bullion Market Association",
+    type: "Market infrastructure",
+    desc: "Good delivery, market news, and standards.",
+    links: [{ label: "LBMA", href: "https://www.lbma.org.uk/" }],
+  },
+  {
+    name: "Federal Reserve",
+    type: "Central bank",
+    desc: "Policy and speeches that often move gold and real yields.",
+    links: [{ label: "Fed news", href: "https://www.federalreserve.gov/feeds/press_all.xml" }],
+  },
+];
+
+  </script>
+  <script>
+  /* ========== Atlas runtime ========== */
+
+/** Auto-refresh interval (ms). Default: 5 minutes. */
+const REFRESH_MS = 5 * 60 * 1000;
+
+const statusText = document.getElementById("statusText");
+const lastUpdated = document.getElementById("lastUpdated");
+const nextRefresh = document.getElementById("nextRefresh");
+const feedGrid = document.getElementById("feedGrid");
+const feedEmpty = document.getElementById("feedEmpty");
+const yearEl = document.getElementById("year");
+
+yearEl.textContent = String(new Date().getFullYear());
+
+let refreshTimer = null;
+let countdownTimer = null;
+let nextRefreshAt = Date.now() + REFRESH_MS;
+
+function setStatus(msg, variant = "ok") {
+  statusText.textContent = msg;
+  statusText.classList.remove("status-ok", "status-warn");
+  if (variant === "warn") statusText.classList.add("status-warn");
+  else statusText.classList.add("status-ok");
+}
+
+function formatTime(d) {
+  return d.toLocaleString(undefined, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+}
+
+function stripHtml(html) {
+  const div = document.createElement("div");
+  div.innerHTML = html || "";
+  return div.textContent || div.innerText || "";
+}
+
+function matchesGold(text) {
+  if (!text) return false;
+  const t = text.toLowerCase();
+  return GOLD_KEYWORDS.some((k) => t.includes(k));
+}
+
+function tagHits(title, snippet) {
+  const blob = `${title} ${snippet}`.toLowerCase();
+  return GOLD_KEYWORDS.filter((k) => blob.includes(k)).slice(0, 4);
+}
+
+/**
+ * Try multiple RSS-to-JSON bridges with timeout.
+ * Falls back gracefully if all bridges fail (CORS / network blocked).
+ */
+async function fetchWithTimeout(fn, ms = 8000) {
+  return Promise.race([
+    fn(),
+    new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), ms)),
+  ]);
+}
+
+async function fetchRssJson(rssUrl) {
+  const encoded = encodeURIComponent(rssUrl);
+  const endpoints = [
+    () => fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encoded}&api_key=&count=20`, { cache: "no-store" }),
+    () => fetch(`https://rss2json.com/api.json?rss_url=${encoded}`, { cache: "no-store" }),
+  ];
+
+  for (const get of endpoints) {
+    try {
+      const res = await fetchWithTimeout(get);
+      if (!res.ok) continue;
+      const data = await res.json();
+      if (data.status === "ok" && Array.isArray(data.items)) return data;
+    } catch {
+      /* try next bridge */
+    }
+  }
+  return null;
+}
+
+const DEMO_ITEMS = [
+  {
+    source: "World Gold Council",
+    title: "Central banks add record 290 tonnes of Gold in Q1 2026",
+    snippet: "Official-sector demand continues at a pace not seen since the 1970s Bretton Woods era, as reserve managers diversify away from US Treasuries.",
+    link: "https://www.gold.org/goldhub/research",
+    pubDate: new Date().toISOString(),
+    tags: ["gold", "central bank"],
+  },
+  {
+    source: "Demo \u00b7 Macro",
+    title: "Real yields and gold: why the spread still matters",
+    snippet: "Illustrative card shown when RSS bridges are blocked or feeds return no gold-tagged items. Configure your own feeds in the CONFIG block above.",
+    link: "https://www.worldbank.org/en/research",
+    pubDate: new Date().toISOString(),
+    tags: ["gold", "inflation"],
+  },
+  {
+    source: "Demo \u00b7 ACCA",
+    title: "ACCA: treasury risk in volatile commodity markets",
+    snippet: "Replace demo content by fixing RSS URLs in the CONFIG block or hosting a small CORS proxy. All other site functionality runs without RSS.",
+    link: "https://www.accaglobal.com/",
+    pubDate: new Date().toISOString(),
+    tags: ["gold", "treasury"],
+  },
+  {
+    source: "Demo \u00b7 FX",
+    title: "De-dollarisation accelerates: Russia, China expand gold reserves",
+    snippet: "Central bank gold accumulation has reached a 50-year high as reserve managers reduce USD exposure amid sanctions risk and fiscal concerns.",
+    link: "https://www.gold.org/",
+    pubDate: new Date().toISOString(),
+    tags: ["gold", "fx", "central bank"],
+  },
+  {
+    source: "Demo \u00b7 Markets",
+    title: "USD weakens on trade deficit data \u2014 Gold benefits from inverse correlation",
+    snippet: "The DXY index fell 0.4% after wider-than-expected trade gap data. Historically, a 1% fall in the dollar index corresponds to a ~0.5\u20131% gold price rise.",
+    link: "https://www.cmegroup.com/markets/metals/precious/gold.html",
+    pubDate: new Date().toISOString(),
+    tags: ["gold", "fx", "dollar"],
+  },
+  {
+    source: "Demo \u00b7 IAS 29",
+    title: "IAS 29 Hyperinflation alert: 3 emerging economies trigger threshold",
+    snippet: "Three reporting jurisdictions have crossed the cumulative 100% inflation threshold over 3 years, requiring financial statement restatement under IAS 29.",
+    link: "https://www.accaglobal.com/gb/en/professional-insights.html",
+    pubDate: new Date().toISOString(),
+    tags: ["inflation", "treasury"],
+  },
+];
+
+async function loadFeedItems() {
+  const collected = [];
+
+  for (const feed of RSS_FEEDS) {
+    const data = await fetchRssJson(feed.rssUrl);
+    if (!data?.items?.length) continue;
+
+    for (const item of data.items) {
+      const title = item.title || "";
+      const rawDesc = item.description || item.content || "";
+      const snippet = stripHtml(rawDesc).slice(0, 280);
+      if (!matchesGold(title) && !matchesGold(snippet)) continue;
+
+      collected.push({
+        source: feed.label,
+        title,
+        snippet,
+        link: item.link || "#",
+        pubDate: item.pubDate || new Date().toISOString(),
+        tags: tagHits(title, snippet),
+      });
+    }
+  }
+
+  collected.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+  return collected;
+}
+
+function renderFeed(items) {
+  feedGrid.innerHTML = "";
+  const list = items.length ? items : DEMO_ITEMS;
+
+  if (!items.length) {
+    feedEmpty.classList.remove("hidden");
+    setStatus("Live feeds unavailable \u2014 demo cards shown", "warn");
+  } else {
+    feedEmpty.classList.add("hidden");
+    setStatus(`${items.length} gold-tagged item${items.length !== 1 ? "s" : ""}`, "ok");
+  }
+
+  const frag = document.createDocumentFragment();
+  for (const item of list.slice(0, 24)) {
+    const a = document.createElement("a");
+    a.className = "feed-card";
+    a.href = item.link;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.setAttribute("role", "listitem");
+
+    const src = document.createElement("span");
+    src.className = "feed-source";
+    src.textContent = item.source;
+
+    const h = document.createElement("h3");
+    h.className = "feed-title";
+    h.textContent = item.title;
+
+    const p = document.createElement("p");
+    p.className = "feed-snippet";
+    p.textContent = item.snippet || "Open article for full text.";
+
+    const tagRow = document.createElement("div");
+    tagRow.className = "tag-row";
+    for (const t of item.tags || []) {
+      const span = document.createElement("span");
+      span.className = "tag";
+      span.textContent = t;
+      tagRow.appendChild(span);
+    }
+
+    const d = document.createElement("span");
+    d.className = "feed-date";
+    d.textContent = formatTime(new Date(item.pubDate));
+
+    a.append(src, h, p);
+    if (tagRow.childElementCount) a.appendChild(tagRow);
+    a.appendChild(d);
+    frag.appendChild(a);
+  }
+
+  feedGrid.appendChild(frag);
+}
+
+function renderInstitutions() {
+  const root = document.getElementById("institutionCards");
+  root.innerHTML = "";
+  const frag = document.createDocumentFragment();
+
+  for (const inst of INSTITUTION_CARDS) {
+    const card = document.createElement("article");
+    card.className = "inst-card";
+
+    const type = document.createElement("span");
+    type.className = "inst-type";
+    type.textContent = inst.type;
+
+    const h = document.createElement("h3");
+    h.textContent = inst.name;
+
+    const desc = document.createElement("p");
+    desc.className = "inst-desc";
+    desc.textContent = inst.desc;
+
+    const links = document.createElement("div");
+    links.className = "inst-links";
+    for (const L of inst.links) {
+      const a = document.createElement("a");
+      a.href = L.href;
+      a.textContent = L.label;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      links.appendChild(a);
+    }
+
+    card.append(type, h, desc, links);
+    frag.appendChild(card);
+  }
+
+  root.appendChild(frag);
+}
+
+async function refreshAll() {
+  setStatus("Refreshing\u2026", "ok");
+  feedGrid.innerHTML = "";
+  const placeholders = Math.min(6, RSS_FEEDS.length || 3);
+  for (let i = 0; i < placeholders; i++) {
+    const s = document.createElement("div");
+    s.className = "shimmer-wrap";
+    s.setAttribute("aria-busy", "true");
+    feedGrid.appendChild(s);
+  }
+
+  const items = await loadFeedItems();
+  renderFeed(items);
+
+  const now = new Date();
+  lastUpdated.textContent = formatTime(now);
+  nextRefreshAt = Date.now() + REFRESH_MS;
+}
+
+function startCountdown() {
+  if (countdownTimer) clearInterval(countdownTimer);
+  countdownTimer = setInterval(() => {
+    const ms = Math.max(0, nextRefreshAt - Date.now());
+    const sec = Math.ceil(ms / 1000);
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    nextRefresh.textContent = `${m}m ${String(s).padStart(2, "0")}s`;
+  }, 1000);
+}
+
+function schedule() {
+  if (refreshTimer) clearInterval(refreshTimer);
+  refreshTimer = setInterval(refreshAll, REFRESH_MS);
+}
+
+renderInstitutions();
+refreshAll();
+startCountdown();
+schedule();
+
+  </script>
+
+  <!-- React + Recharts via CDN -->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
+  <script type="text/babel" data-presets="react">
+const { useState, useEffect, useMemo } = React;
+const {
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
+  ResponsiveContainer, ReferenceLine, LineChart, Line, Legend,
+} = Recharts;
+
+// ─── DATA ───────────────────────────────────────────────────────────────────
+
+const GOLD_DATA = [
+  { year: "2006", inr: 8400, usd: 603, cpi: 100, event: null },
+  { year: "2007", inr: 10800, usd: 697, cpi: 106.2, event: null },
+  {
+    year: "2008",
+    inr: 12500,
+    usd: 700,
+    cpi: 113.3,
+    event: "2008: Lehman Brothers Collapse — Systemic Risk triggers Safe Haven demand",
+  },
+  { year: "2009", inr: 14500, usd: 972, cpi: 126.4, event: null },
+  { year: "2010", inr: 18500, usd: 1225, cpi: 139.6, event: null },
+  {
+    year: "2011",
+    inr: 26000,
+    usd: 1900,
+    cpi: 152.4,
+    event: "2011: Gold peaks at $1,900/oz — Post-crisis Safe Haven peak",
+  },
+  { year: "2012", inr: 31050, usd: 1669, cpi: 164.7, event: null },
+  { year: "2013", inr: 29600, usd: 1204, cpi: 176.1, event: null },
+  { year: "2014", inr: 27350, usd: 1199, cpi: 184.5, event: null },
+  { year: "2015", inr: 26343, usd: 1060, cpi: 189.4, event: null },
+  { year: "2016", inr: 28624, usd: 1151, cpi: 197.2, event: null },
+  { year: "2017", inr: 29667, usd: 1257, cpi: 201.1, event: null },
+  { year: "2018", inr: 31438, usd: 1282, cpi: 207.3, event: null },
+  { year: "2019", inr: 35220, usd: 1517, cpi: 213.9, event: null },
+  {
+    year: "2020",
+    inr: 48661,
+    usd: 1887,
+    cpi: 218.5,
+    event: "2020: COVID-19 Pandemic — Unprecedented monetary stimulus drives Gold to record \u20b948,600",
+  },
+  { year: "2021", inr: 48720, usd: 1829, cpi: 228.4, event: null },
+  {
+    year: "2022",
+    inr: 52670,
+    usd: 1801,
+    cpi: 247.3,
+    event: "2022: Russia-Ukraine War — Geopolitical Crisis triggers Safe Haven Flight",
+  },
+  { year: "2023", inr: 63132, usd: 1943, cpi: 263.8, event: null },
+  { year: "2024", inr: 72000, usd: 2389, cpi: 278.2, event: null },
+  {
+    year: "2025",
+    inr: 90000,
+    usd: 2950,
+    cpi: 291.4,
+    event: "2025: Global De-dollarization — Central Bank Gold purchases hit 50-year record",
+  },
+  {
+    year: "2026",
+    inr: 144367,
+    usd: 3050,
+    cpi: 301.2,
+    event: "2026: March Peak — \u20b91,44,367/10g; Rupee at \u20b993.85/USD",
+  },
+];
+
+const NEWS_HEADLINES = [
+  { text: "US Fed holds rates at 4.25% — Gold steady above $3,050/oz", sentiment: "neutral" },
+  { text: "Geopolitical tensions rise in Middle East — Gold surges +1.2%", sentiment: "bullish" },
+  { text: "India CPI inflation at 5.8% — Demand for Gold as hedge intensifies", sentiment: "bullish" },
+  { text: "RBI raises reverse repo rate — Opportunity cost of Gold increases", sentiment: "bearish" },
+  { text: "Central banks add 290 tonnes of Gold in Q1 2026 — Record pace", sentiment: "bullish" },
+  { text: "USD weakens on trade deficit data — Gold benefits from inverse correlation", sentiment: "bullish" },
+  { text: "US Treasury yields fall to 3.9% — Gold outperforms T-bonds", sentiment: "bullish" },
+  { text: "De-dollarization accelerates: Russia, China expand Gold reserves", sentiment: "bullish" },
+  { text: "S&P 500 drops 2.1% on recession fears — Gold acts as portfolio hedge", sentiment: "bullish" },
+  { text: "Rupee depreciates to \u20b994.2/USD — Imported Gold prices rise further", sentiment: "bullish" },
+  { text: "IAS 29 Hyperinflation alert: 3 emerging economies trigger threshold", sentiment: "neutral" },
+  { text: "Lehman-style risk: 2 regional US banks under Fed watch", sentiment: "bullish" },
+];
+
+const INSIGHTS = [
+  {
+    icon: "⚖️",
+    title: "Negative Correlation",
+    label: "ACCA AFM Core",
+    body: "Gold carries near-zero Beta (\u03b2 \u2248 0.05) relative to equity markets. During the 2008 systemic collapse, the S&P 500 lost 38.5% while Gold gained 5.8% — a classic negative correlation that validates Modern Portfolio Theory's diversification principle.",
+    tag: "Portfolio Theory",
+  },
+  {
+    icon: "🏛️",
+    title: "Store of Value",
+    label: "IAS 29 Linkage",
+    body: "Unlike fiat currency, Gold cannot be \u2018printed.\u2019 Since 2006, India's CPI has risen ~201%, yet Gold has appreciated ~1,620% — preserving real purchasing power. IAS 29 recognises this when reporting in hyperinflationary economies.",
+    tag: "Fiat Currency Debasement",
+  },
+  {
+    icon: "💧",
+    title: "Liquidity & Last Resort",
+    label: "ACCA SBR Risk",
+    body: "Gold is the only asset with zero counterparty risk — it is nobody's liability. During bank runs (2008, 2023 SVB collapse), Gold remained fully liquid globally. Central banks hold Gold as Tier-1 reserve precisely for this reason.",
+    tag: "Systemic Risk Hedge",
+  },
+  {
+    icon: "📊",
+    title: "Forex Sensitivity",
+    label: "ACCA AFM P4",
+    body: "Gold is priced in USD globally. When the INR depreciates (\u20b968\u2192\u20b993.85 since 2014), Indian investors gain a double return: the USD Gold price rise + the currency depreciation gain — amplifying returns in Rupee terms.",
+    tag: "Exchange Rate Risk",
+  },
+];
+
+const INSTITUTION_LENS = [
+  {
+    icon: "🏦",
+    org: "World Gold Council",
+    theme: "Stock & flow / ETF holdings",
+    body: "Emphasises jewellery + bar demand vs mine supply, and ETF positioning as marginal price driver when real rates flatten.",
+    tag: "Flow analytics",
+  },
+  {
+    icon: "🦅",
+    org: "Federal Reserve / Macro desks",
+    theme: "Real yields & USD",
+    body: "Higher real rates raise the opportunity cost of zero-coupon gold; DXY strength often pressures gold unless risk-off dominates.",
+    tag: "Rates channel",
+  },
+  {
+    icon: "🐆",
+    org: "J.P. Morgan Markets",
+    theme: "Cross-asset hedge",
+    body: "Sell-side models often treat gold as volatility dampener in multi-asset portfolios when equity risk premia expand.",
+    tag: "Cross-asset",
+  },
+  {
+    icon: "⭐",
+    org: "Goldman Sachs Research",
+    theme: "Debasing tail-risk",
+    body: "Long-cycle framing: fiscal dominance and reserve diversification narratives support structural allocation case in stress regimes.",
+    tag: "Fiscal / FX",
+  },
+  {
+    icon: "🔷",
+    org: "Deutsche Bank / Rates",
+    theme: "Carry & positioning",
+    body: "European and US rates paths + positioning in futures can dominate week-to-week swings even when physical remains tight.",
+    tag: "Positioning",
+  },
+  {
+    icon: "⚱️",
+    org: "LBMA / Loco London",
+    theme: "Physical settlement",
+    body: "Wholesale market structure (GOFO, lease rates) informs short-term tightness; less visible to retail but shapes basis risk.",
+    tag: "Market structure",
+  },
+];
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+
+const fmt = (n) =>
+  n >= 100000
+    ? `\u20b9${(n / 100000).toFixed(2)}L`
+    : `\u20b9${n.toLocaleString("en-IN")}`;
+
+const fmtUSD = (n) => `$${n?.toLocaleString?.() ?? n}`;
+
+function GoldTooltip({ active, payload, label, realMode }) {
+  if (!active || !payload?.length) return null;
+  const d = GOLD_DATA.find((r) => r.year === label);
+  const nominal = payload.find((p) => p.dataKey === "inr" || p.dataKey === "realINR");
+  const val = nominal?.value;
+  return (
+    <div
+      style={{
+        background: "rgba(10,12,20,0.97)",
+        border: "1px solid rgba(212,175,55,0.4)",
+        borderRadius: 12,
+        padding: "14px 18px",
+        boxShadow: "0 8px 32px rgba(212,175,55,0.15)",
+        maxWidth: 280,
+      }}
+    >
+      <p style={{ color: "#D4AF37", fontWeight: 700, fontSize: 15, marginBottom: 4 }}>
+        {label}
+      </p>
+      {nominal != null && (
+        <p style={{ color: "#fff", fontSize: 13 }}>
+          {realMode ? "Real (CPI-adj)" : "Nominal"}: <strong>{fmt(val)}</strong>
+        </p>
+      )}
+      <p style={{ color: "#94a3b8", fontSize: 12 }}>USD: {fmtUSD(d?.usd)}</p>
+      {d?.event && (
+        <div
+          style={{
+            marginTop: 8,
+            padding: "8px 10px",
+            background: "rgba(212,175,55,0.1)",
+            borderRadius: 8,
+            borderLeft: "2px solid #D4AF37",
+          }}
+        >
+          <p style={{ color: "#fbbf24", fontSize: 11, lineHeight: 1.5 }}>{d.event}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
+
+function ACCAGoldSuite() {
+  const [realMode, setRealMode] = useState(false);
+  const [usdInr, setUsdInr] = useState(93.85);
+  const [activeInsight, setActiveInsight] = useState(0);
+  const [activeLens, setActiveLens] = useState(0);
+  const [tab, setTab] = useState("timeline");
+
+  const chartData = useMemo(
+    () =>
+      GOLD_DATA.map((d) => {
+        const nominalINR = Math.round(d.inr * (usdInr / 93.85));
+        const realINR = Math.round((nominalINR / d.cpi) * 100);
+        const adjustedUSD = Math.round(d.usd * (usdInr / 93.85));
+        return { ...d, inr: nominalINR, realINR, adjustedUSD };
+      }),
+    [usdInr]
+  );
+
+  const base = chartData[0];
+  const latest = chartData[chartData.length - 1];
+  const totalReturn = (((latest.inr - base.inr) / base.inr) * 100).toFixed(0);
+  const usdReturn = (((latest.usd - base.usd) / base.usd) * 100).toFixed(0);
+  const realReturn = (
+    ((latest.realINR - chartData[0].realINR) / chartData[0].realINR) * 100
+  ).toFixed(0);
+  const cagr = ((Math.pow(latest.inr / base.inr, 1 / 20) - 1) * 100).toFixed(2);
+
+  const eventYears = useMemo(() => GOLD_DATA.filter((d) => d.event).map((d) => d.year), []);
+
+  const forexSensitivity = useMemo(
+    () =>
+      GOLD_DATA.map((d) => {
+        const inrAtBase = d.inr;
+        const inrAtSlider = Math.round(d.inr * (usdInr / 93.85));
+        return { year: d.year, inrBase: inrAtBase, inrStress: inrAtSlider };
+      }),
+    [usdInr]
+  );
+
+  const handlePrint = () => window.print();
+
+  const glass = {
+    background: "rgba(15,20,35,0.65)",
+    backdropFilter: "blur(20px)",
+    border: "1px solid rgba(212,175,55,0.18)",
+    borderRadius: 20,
+  };
+
+  const goldGrad = "linear-gradient(135deg, #D4AF37 0%, #F5E27A 50%, #B8860B 100%)";
+  const gold = "#D4AF37";
+  const dimGold = "rgba(212,175,55,0.7)";
+
+  useEffect(() => {
+    const id = setInterval(() => setActiveInsight((i) => (i + 1) % INSIGHTS.length), 6500);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => setActiveLens((i) => (i + 1) % INSTITUTION_LENS.length), 7000);
+    return () => clearInterval(id);
+  }, []);
+
+  const insight = INSIGHTS[activeInsight];
+  const lens = INSTITUTION_LENS[activeLens];
+
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        background: `radial-gradient(ellipse at 20% 0%, rgba(212,175,55,0.08) 0%, transparent 60%),
+                   radial-gradient(ellipse at 80% 100%, rgba(180,120,10,0.06) 0%, transparent 60%),
+                   linear-gradient(180deg, #040608 0%, #080c18 40%, #060910 100%)`,
+        fontFamily: "'Georgia', 'Times New Roman', serif",
+        color: "#e2e8f0",
+        padding: "24px 16px",
+      }}
+    >
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+        {/* HEADER */}
+        <header style={{ textAlign: "center", marginBottom: 40 }}>
+          <div
+            style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 12, marginBottom: 12 }}
+          >
+            <div style={{ width: 36, height: 2, background: goldGrad }} />
+            <span className="dmsans" style={{ color: dimGold, fontSize: 12, letterSpacing: 4, textTransform: "uppercase" }}>
+              ACCA Strategic Audit Portfolio
+            </span>
+            <div style={{ width: 36, height: 2, background: goldGrad }} />
+          </div>
+          <h1
+            className="playfair gold-text"
+            style={{ fontSize: "clamp(28px,5vw,52px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 10 }}
+          >
+            2026 ACCA Gold &<br />
+            Inflation Audit Suite
+          </h1>
+          <p className="dmsans" style={{ color: "#94a3b8", fontSize: 14, maxWidth: 640, margin: "0 auto", lineHeight: 1.7 }}>
+            Professional dashboard: 20-year gold dynamics, IAS 29 real/nominal toggle, forex stress on INR
+            landed cost, ACCA AFM &amp; SBR lenses — plus how major market bodies and banks typically frame the
+            asset (conceptual synthesis for audit narrative).
+          </p>
+          <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 18, flexWrap: "wrap" }}>
+            {["ACCA AFM P4", "IAS 29", "SBR Risk", "WGC / LBMA", "Sell-side macro"].map((tag) => (
+              <span
+                key={tag}
+                className="dmsans"
+                style={{
+                  padding: "4px 12px",
+                  borderRadius: 20,
+                  fontSize: 11,
+                  letterSpacing: 1,
+                  background: "rgba(212,175,55,0.1)",
+                  border: "1px solid rgba(212,175,55,0.3)",
+                  color: gold,
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </header>
+
+        {/* TICKER */}
+        <div
+          style={{
+            ...glass,
+            padding: "0",
+            marginBottom: 28,
+            display: "flex",
+            alignItems: "stretch",
+            overflow: "hidden",
+            height: 44,
+          }}
+          className="glow"
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              flexShrink: 0,
+              padding: "0 18px",
+              background: "rgba(212,175,55,0.12)",
+              borderRight: "1px solid rgba(212,175,55,0.25)",
+              zIndex: 2,
+            }}
+          >
+            <div
+              className="pulse-dot"
+              style={{ width: 7, height: 7, borderRadius: "50%", flexShrink: 0, background: "#22c55e" }}
+            />
+            <span className="dmsans" style={{ color: gold, fontSize: 10, fontWeight: 700, letterSpacing: 2, whiteSpace: "nowrap" }}>
+              SAFE HAVEN PULSE
+            </span>
+          </div>
+
+          <div style={{ flex: 1, overflow: "hidden", display: "flex", alignItems: "center", position: "relative" }}>
+            <div
+              style={{
+                position: "absolute", left: 0, top: 0, bottom: 0, width: 40,
+                background: "linear-gradient(to right, rgba(15,20,35,0.9), transparent)",
+                zIndex: 1, pointerEvents: "none",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute", right: 0, top: 0, bottom: 0, width: 40,
+                background: "linear-gradient(to left, rgba(15,20,35,0.9), transparent)",
+                zIndex: 1, pointerEvents: "none",
+              }}
+            />
+            <div className="ticker-track">
+              {[...NEWS_HEADLINES, ...NEWS_HEADLINES].map((item, i) => (
+                <span
+                  key={i}
+                  className="dmsans"
+                  style={{
+                    fontSize: 13,
+                    color: item.sentiment === "bullish" ? "#86efac" : item.sentiment === "bearish" ? "#fca5a5" : "#cbd5e1",
+                    paddingRight: 0,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
+                >
+                  <span
+                    style={{
+                      display: "inline-block", width: 6, height: 6, borderRadius: "50%", flexShrink: 0,
+                      background: item.sentiment === "bullish" ? "#22c55e" : item.sentiment === "bearish" ? "#ef4444" : "#f59e0b",
+                      marginLeft: 32,
+                    }}
+                  />
+                  {item.text}
+                  <span style={{ color: "rgba(212,175,55,0.4)", marginLeft: 24, fontSize: 16 }}>&#9670;</span>
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div
+            style={{ display: "flex", alignItems: "center", flexShrink: 0, padding: "0 14px", borderLeft: "1px solid rgba(212,175,55,0.15)" }}
+          >
+            <span className="dmsans" style={{ color: "#475569", fontSize: 11, whiteSpace: "nowrap" }}>
+              {new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
+            </span>
+          </div>
+        </div>
+
+        {/* KPIs */}
+        <div
+          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16, marginBottom: 28 }}
+        >
+          {[
+            { label: "Current INR Price", value: fmt(latest.inr), sub: `per 10g \u00b7 stress rate \u20b9${usdInr}/USD`, color: gold },
+            { label: "20-Year Nominal Return", value: `+${totalReturn}%`, sub: `CAGR: ${cagr}% p.a.`, color: "#22c55e" },
+            { label: "USD Return (20Y)", value: `+${usdReturn}%`, sub: `$${base.usd} \u2192 $${latest.usd}`, color: "#60a5fa" },
+            { label: "Real CPI-Adj Return", value: `+${realReturn}%`, sub: "IAS 29 adjusted basis", color: "#f59e0b" },
+          ].map((k) => (
+            <div key={k.label} className="kpi-card" style={{ ...glass, padding: "20px 22px" }}>
+              <p className="dmsans" style={{ color: "#64748b", fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 8 }}>
+                {k.label}
+              </p>
+              <p className="playfair" style={{ fontSize: "clamp(22px,3vw,30px)", fontWeight: 700, color: k.color, lineHeight: 1 }}>
+                {k.value}
+              </p>
+              <p className="dmsans" style={{ color: "#475569", fontSize: 12, marginTop: 5 }}>{k.sub}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* INSTITUTION LENS */}
+        <section style={{ ...glass, padding: "24px", marginBottom: 28 }} className="glow">
+          <div style={{ marginBottom: 16 }}>
+            <h2 className="playfair" style={{ fontSize: 20, color: gold, marginBottom: 6 }}>
+              Institution &amp; bank lenses on gold
+            </h2>
+            <p className="dmsans" style={{ color: "#64748b", fontSize: 12, maxWidth: 720 }}>
+              Educational synthesis of how bodies (WGC, LBMA), central-bank macro, and typical sell-side desks frame
+              drivers — useful for SBR risk narrative and AFM cross-border pricing.
+            </p>
+          </div>
+          <div
+            className="insight-card"
+            style={{
+              padding: "18px 20px",
+              borderRadius: 14,
+              background: "rgba(212,175,55,0.06)",
+              border: "1px solid rgba(212,175,55,0.25)",
+              marginBottom: 16,
+            }}
+            onClick={() => setActiveLens((i) => (i + 1) % INSTITUTION_LENS.length)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ")
+                setActiveLens((i) => (i + 1) % INSTITUTION_LENS.length);
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+              <span style={{ fontSize: 26 }}>{lens.icon}</span>
+              <div>
+                <p className="dmsans" style={{ color: dimGold, fontSize: 11, letterSpacing: 2 }}>
+                  {lens.org.toUpperCase()}
+                </p>
+                <p className="playfair" style={{ fontSize: 18, fontWeight: 700 }}>
+                  {lens.theme}
+                </p>
+              </div>
+              <span
+                className="dmsans"
+                style={{ marginLeft: "auto", fontSize: 10, padding: "4px 10px", borderRadius: 20, background: "rgba(212,175,55,0.15)", color: gold }}
+              >
+                {lens.tag}
+              </span>
+            </div>
+            <p className="dmsans" style={{ color: "#cbd5e1", fontSize: 13, lineHeight: 1.65 }}>{lens.body}</p>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: 12 }}>
+            {INSTITUTION_LENS.map((L, idx) => (
+              <button
+                type="button"
+                key={L.org}
+                onClick={() => setActiveLens(idx)}
+                className="tab-btn"
+                style={{
+                  textAlign: "left",
+                  padding: "12px 14px",
+                  borderRadius: 12,
+                  background: activeLens === idx ? "rgba(212,175,55,0.18)" : "rgba(15,20,35,0.5)",
+                  border: `1px solid ${activeLens === idx ? "rgba(212,175,55,0.45)" : "rgba(212,175,55,0.15)"}`,
+                  color: "#e2e8f0",
+                }}
+              >
+                <span style={{ fontSize: 18, marginRight: 8 }}>{L.icon}</span>
+                <span className="dmsans" style={{ fontWeight: 600, fontSize: 13 }}>{L.org}</span>
+                <p className="dmsans" style={{ color: "#64748b", fontSize: 11, marginTop: 4 }}>{L.theme}</p>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* ACCA INSIGHTS CAROUSEL */}
+        <section style={{ ...glass, padding: "24px", marginBottom: 28 }}>
+          <h2 className="playfair" style={{ fontSize: 20, color: gold, marginBottom: 12 }}>
+            ACCA syllabus anchors
+          </h2>
+          <div className="insight-card" style={{ padding: "8px 4px" }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
+              <span style={{ fontSize: 36, lineHeight: 1 }}>{insight.icon}</span>
+              <div>
+                <p className="dmsans" style={{ color: dimGold, fontSize: 11, letterSpacing: 2 }}>{insight.label}</p>
+                <h3 className="playfair" style={{ fontSize: 22, marginBottom: 8 }}>{insight.title}</h3>
+                <p className="dmsans" style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.7 }}>{insight.body}</p>
+                <span
+                  className="dmsans"
+                  style={{
+                    display: "inline-block", marginTop: 12, fontSize: 11, padding: "4px 12px",
+                    borderRadius: 20, background: "rgba(212,175,55,0.12)", color: gold,
+                  }}
+                >
+                  {insight.tag}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: 8, marginTop: 16, justifyContent: "center" }}>
+            {INSIGHTS.map((_, i) => (
+              <button
+                type="button"
+                key={i}
+                className="tab-btn"
+                onClick={() => setActiveInsight(i)}
+                style={{ width: 10, height: 10, borderRadius: "50%", background: i === activeInsight ? gold : "rgba(71,85,105,0.6)", padding: 0 }}
+                aria-label={`Insight ${i + 1}`}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* TABS */}
+        <div style={{ display: "flex", gap: 8, marginBottom: 24, flexWrap: "wrap" }} className="no-print">
+          {[
+            { id: "timeline", label: "📈 20-Year Timeline" },
+            { id: "forex", label: "💱 Forex Module" },
+            { id: "audit", label: "📋 Auditor's Guide" },
+          ].map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              className="tab-btn"
+              onClick={() => setTab(t.id)}
+              style={{
+                padding: "10px 20px",
+                borderRadius: 10,
+                fontSize: 13,
+                fontWeight: 500,
+                background: tab === t.id ? goldGrad : "rgba(15,20,35,0.6)",
+                color: tab === t.id ? "#040608" : "#94a3b8",
+                border: tab === t.id ? "none" : "1px solid rgba(212,175,55,0.2)",
+              }}
+            >
+              {t.label}
+            </button>
+          ))}
+          <button
+            type="button"
+            className="tab-btn no-print"
+            onClick={handlePrint}
+            style={{
+              padding: "10px 20px", borderRadius: 10, fontSize: 13, fontWeight: 500,
+              background: "rgba(212,175,55,0.08)", color: gold, border: "1px solid rgba(212,175,55,0.4)",
+              marginLeft: "auto",
+            }}
+          >
+            &#8595; Print appraisal
+          </button>
+        </div>
+
+        {/* TIMELINE TAB */}
+        {tab === "timeline" && (
+          <div style={{ ...glass, padding: "28px 24px", marginBottom: 24 }} className="glow">
+            <div
+              style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24, flexWrap: "wrap", gap: 12 }}
+            >
+              <div>
+                <h2 className="playfair" style={{ fontSize: 22, color: gold, marginBottom: 4 }}>
+                  Gold Price Audit — 2006 to 2026
+                </h2>
+                <p className="dmsans" style={{ color: "#64748b", fontSize: 12 }}>
+                  Nominal INR vs. CPI-adjusted real value (IAS 29 basis). Drag forex module to restate landed INR.
+                </p>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span className="dmsans" style={{ fontSize: 12, color: "#64748b" }}>IAS 29 Real Mode</span>
+                <button
+                  type="button"
+                  onClick={() => setRealMode((r) => !r)}
+                  aria-pressed={realMode}
+                  style={{
+                    width: 44, height: 24, borderRadius: 12, cursor: "pointer",
+                    backgroundImage: realMode ? goldGrad : "none",
+                    backgroundColor: realMode ? undefined : "rgba(71,85,105,0.5)",
+                    position: "relative", transition: "all 0.3s ease", border: "none", padding: 0,
+                  }}
+                >
+                  <span
+                    style={{
+                      position: "absolute", top: 3, left: realMode ? 22 : 3,
+                      width: 18, height: 18, borderRadius: "50%", background: "#fff", transition: "left 0.3s ease",
+                    }}
+                  />
+                </button>
+                <span className="dmsans" style={{ fontSize: 12, color: realMode ? gold : "#64748b" }}>
+                  {realMode ? "ON" : "OFF"}
+                </span>
+              </div>
+            </div>
+
+            <ResponsiveContainer width="100%" height={420}>
+              <AreaChart data={chartData} margin={{ top: 10, right: 24, left: 8, bottom: 8 }}>
+                <defs>
+                  <linearGradient id="fillGold" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#D4AF37" stopOpacity={0.45} />
+                    <stop offset="100%" stopColor="#D4AF37" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
+                <XAxis dataKey="year" stroke="#64748b" tick={{ fontSize: 11 }} />
+                <YAxis
+                  stroke="#64748b"
+                  tick={{ fontSize: 11 }}
+                  tickFormatter={(v) => (v >= 100000 ? `${(v / 100000).toFixed(1)}L` : `${v / 1000}k`)}
+                />
+                <Tooltip content={<GoldTooltip realMode={realMode} />} />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                {eventYears.map((y) => (
+                  <ReferenceLine key={y} x={y} stroke="#D4AF37" strokeDasharray="4 6" strokeOpacity={0.5} />
+                ))}
+                <Area
+                  type="monotone"
+                  dataKey={realMode ? "realINR" : "inr"}
+                  name={realMode ? "Real INR (CPI adj)" : "Nominal INR /10g"}
+                  stroke="#D4AF37"
+                  strokeWidth={2}
+                  fillOpacity={1}
+                  fill="url(#fillGold)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+            <p className="dmsans print-only" style={{ marginTop: 16, fontSize: 12, color: "#333" }}>
+              Event markers: dashed vertical lines = crisis / regime-shift annotations in dataset.
+            </p>
+          </div>
+        )}
+
+        {/* FOREX TAB */}
+        {tab === "forex" && (
+          <div style={{ ...glass, padding: "28px 24px", marginBottom: 24 }}>
+            <h2 className="playfair" style={{ fontSize: 22, color: gold, marginBottom: 8 }}>
+              Forex stress &mdash; INR per USD
+            </h2>
+            <p className="dmsans" style={{ color: "#64748b", fontSize: 13, marginBottom: 20, maxWidth: 720 }}>
+              Base case in dataset: <strong>&#8377;93.85/USD</strong>. Slide to simulate depreciation/appreciation on landed
+              gold (INR series rescales proportionally).
+            </p>
+            <div style={{ marginBottom: 24 }}>
+              <label className="dmsans" htmlFor="usdInr" style={{ fontSize: 13, color: "#94a3b8" }}>
+                USD/INR: <strong style={{ color: gold }}>&#8377;{usdInr.toFixed(2)}</strong>
+              </label>
+              <input
+                id="usdInr"
+                type="range"
+                className="slider-gold"
+                min={75}
+                max={110}
+                step={0.05}
+                value={usdInr}
+                onChange={(e) => setUsdInr(Number(e.target.value))}
+                style={{ width: "100%", marginTop: 12, accentColor: gold }}
+              />
+              <div className="dmsans" style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#475569", marginTop: 6 }}>
+                <span>&#8377;75 (strong INR)</span>
+                <span>&#8377;110 (stress)</span>
+              </div>
+            </div>
+
+            <ResponsiveContainer width="100%" height={360}>
+              <LineChart data={forexSensitivity} margin={{ top: 8, right: 24, left: 8, bottom: 8 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.45} />
+                <XAxis dataKey="year" stroke="#64748b" tick={{ fontSize: 11 }} />
+                <YAxis stroke="#64748b" tick={{ fontSize: 11 }} tickFormatter={(v) => fmt(v)} />
+                <Tooltip
+                  formatter={(value) => [fmt(value), ""]}
+                  contentStyle={{ background: "rgba(10,12,20,0.95)", border: "1px solid rgba(212,175,55,0.35)", borderRadius: 10 }}
+                />
+                <Legend />
+                <Line type="monotone" dataKey="inrBase" name="INR @ base &#8377;93.85" stroke="#60a5fa" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="inrStress" name={`INR @ \u20b9${usdInr}/USD`} stroke="#D4AF37" strokeWidth={2} dot={false} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        )}
+
+        {/* AUDIT TAB */}
+        {tab === "audit" && (
+          <div style={{ ...glass, padding: "28px 24px", marginBottom: 48 }}>
+            <h2 className="playfair" style={{ fontSize: 22, color: gold, marginBottom: 12 }}>
+              Auditor&apos;s narrative checklist
+            </h2>
+            <ul className="dmsans" style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.9, paddingLeft: 20 }}>
+              <li>
+                <strong style={{ color: "#e2e8f0" }}>Functional currency vs USD gold:</strong> document FX basis for
+                fair value or hedge accounting (IAS 21 / IFRS 9 linkage in group reporting).
+              </li>
+              <li>
+                <strong style={{ color: "#e2e8f0" }}>IAS 29:</strong> if reporting in hyperinflationary economy, assess
+                whether historical cost assets understate economic reality &mdash; gold may be economic hedge in narrative
+                but financial statement treatment follows the standard&apos;s restatement rules.
+              </li>
+              <li>
+                <strong style={{ color: "#e2e8f0" }}>Going concern / liquidity:</strong> correlate treasury policy to
+                metal holdings; counterparty-free nature supports stressed liquidity stories but does not replace cash
+                flow tests.
+              </li>
+              <li>
+                <strong style={{ color: "#e2e8f0" }}>Institution disclosures:</strong> where applicable, trace
+                management commentary on &ldquo;safe haven&rdquo; demand to observable market data (rates, DXY, volatility) &mdash;
+                align with WGC / central-bank statistics where entity claims official-sector trends.
+              </li>
+            </ul>
+          </div>
+        )}
+
+        <footer className="dmsans" style={{ textAlign: "center", color: "#475569", fontSize: 11, padding: "24px 0" }}>
+          For study &amp; professional narrative &mdash; not investment advice. Verify all market facts independently.
+        </footer>
+      </div>
+    </div>
+  );
+}
+
+if (document.getElementById("acca-root") && window.ReactDOM && ReactDOM.createRoot) {
+  ReactDOM.createRoot(document.getElementById("acca-root")).render(<ACCAGoldSuite />);
+}
+  </script>
+</body>
+</html>
