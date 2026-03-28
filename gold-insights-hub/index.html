@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gold Insight Atlas — Institutions & Research</title>
+  <meta name="description" content="Aggregated gold market perspectives from professional bodies, banks, and macro commentators. Auto-updating feed." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <strong class="brand-name">Gold Insight Atlas</strong>
+          <span class="brand-tag">Multi-institution · Auto-refresh</span>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="#feed">Live feed</a>
+        <a href="#institutions">Institutions</a>
+        <a href="#about">About</a>
+      </nav>
+      <div class="header-status">
+        <span class="pulse" aria-hidden="true"></span>
+        <span id="statusText">Initializing…</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">Professional gold intelligence</p>
+        <h1>One view of how <em>bodies, banks, and markets</em> frame gold.</h1>
+        <p class="lead">
+          This page automatically refreshes headlines and links from configured RSS sources and curated institution hubs.
+          Paste your own ACCA or internal links in <code class="inline-code">js/sources.js</code>—no build step required.
+        </p>
+        <div class="hero-meta">
+          <div class="meta-pill">
+            <span class="mono" id="lastUpdated">—</span>
+            <span class="meta-label">Last aggregation</span>
+          </div>
+          <div class="meta-pill">
+            <span class="mono" id="nextRefresh">—</span>
+            <span class="meta-label">Next refresh</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="orbit">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="feed">
+      <div class="section-head">
+        <h2>Live insight stream</h2>
+        <p class="section-desc">Keyword-filtered headlines from global business and commodity RSS feeds. Refreshes automatically.</p>
+      </div>
+      <div id="feedGrid" class="feed-grid" role="list"></div>
+      <p id="feedEmpty" class="feed-empty hidden" role="status">No items matched gold-related keywords in this cycle. Try again after the next refresh.</p>
+    </section>
+
+    <section class="section alt" id="institutions">
+      <div class="section-head">
+        <h2>Institution &amp; “sell-side” hubs</h2>
+        <p class="section-desc">Curated entry points to ACCA, major banks, and market structure voices. Links open in a new tab.</p>
+      </div>
+      <div id="institutionCards" class="card-grid"></div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-head">
+        <h2>About automation</h2>
+        <p class="section-desc">Everything runs in the browser: timers, fetch, and keyword tagging. For production-grade reliability, proxy RSS through your own backend.</p>
+      </div>
+      <div class="about-grid">
+        <article class="about-card">
+          <h3>Configure sources</h3>
+          <p>Edit <code class="inline-code">js/sources.js</code> to add RSS URLs, institution cards, and gold keywords.</p>
+        </article>
+        <article class="about-card">
+          <h3>Refresh cadence</h3>
+          <p>Default refresh is every 5 minutes. Change <code class="inline-code">REFRESH_MS</code> in <code class="inline-code">js/app.js</code>.</p>
+        </article>
+        <article class="about-card">
+          <h3>Disclaimer</h3>
+          <p>This is an aggregation demo, not investment advice. Verify all research at the original publisher.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p><strong>Gold Insight Atlas</strong> · Local static site · © <span id="year"></span></p>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
